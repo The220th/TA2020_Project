@@ -229,11 +229,11 @@ public class Car
         {
             try
             {
-                int Uy = 20;
+                int Uy = 40;
                 if(this.Y > y)
                     Uy *= -1;
 
-                int Ux = 20;
+                int Ux = 40;
                 if(this.X > x)
                     Ux *= -1;
                 
@@ -273,5 +273,10 @@ public class Car
 
         new Thread(task).start();
         return true;
+    }
+
+    public boolean isBusy()
+    {
+        return MOVED;
     }
 }
