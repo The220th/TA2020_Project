@@ -171,7 +171,7 @@ class sComponent extends JComponent
                     case 4:
                     {
                         currentState = 2;
-                        out = 2;
+                        out = 0;
                         break;
                     }
                     case 5:
