@@ -14,6 +14,7 @@ class sComponent extends JComponent
     private int DEFAULT_WIDTH;
     private int DEFAULT_HEIGHT;
     private Color SunMoon;
+	private boolean redCatched;
 
     private int BeginX = 10;
     private int BeginY = 350;
@@ -377,7 +378,7 @@ class sComponent extends JComponent
                     }
                     case 2:
                     {
-                        currentState = 7;
+                        currentState = 6;
                         out = 2;
                         break;
                     }
@@ -432,7 +433,7 @@ class sComponent extends JComponent
                     }
                     case 2:
                     {
-                        currentState = 4;
+                        currentState = 7;
                         out = 2;
                         break;
                     }
@@ -480,6 +481,7 @@ class sComponent extends JComponent
         BusinessLogic();
         currentState = 0;
         SunMoon = Color.YELLOW;
+		redCatched = false;
     }
 
     private void genIn()
@@ -487,7 +489,11 @@ class sComponent extends JComponent
         Random r = new Random();
         int in = r.nextInt(8);
         if(in <= 5)
+		{
+			if(in == 4)
+				redCatched = false;
             c = new Car(BeginX, BeginY, in);
+		}
         else
         {
             if(in == 6)
@@ -509,8 +515,9 @@ class sComponent extends JComponent
                 DeWayY.add(Integer.valueOf(BeginY));
                 break;
             }
-            case 1:
+            case 1:	//Поймать
             {
+				redCatched = !redCatched;
                 DeWayX.add(Integer.valueOf(550));
                 DeWayY.add(Integer.valueOf(BeginY));
                 DeWayX.add(Integer.valueOf(550));
@@ -527,11 +534,13 @@ class sComponent extends JComponent
                 DeWayY.add(Integer.valueOf(770));
                 break;
             }
-            case 3:
+            case 3:	//Добавить по центру дороги НАДО НОРМАЛЬНУЮ ДОРОГУ!!!!
             {
-                DeWayX.add(Integer.valueOf(700));
+                DeWayX.add(Integer.valueOf(670));
                 DeWayY.add(Integer.valueOf(BeginY));
-                DeWayX.add(Integer.valueOf(900));
+				DeWayX.add(Integer.valueOf(825));
+				DeWayY.add(Integer.valueOf(140));
+                DeWayX.add(Integer.valueOf(925));
                 DeWayY.add(Integer.valueOf(0));
                 break;
             }
@@ -625,7 +634,11 @@ class sComponent extends JComponent
         g.drawLine(500, 450, 500, 600);
         g.drawLine(650, 450, 650, 600);
         g.drawLine(500, 600, 650, 600);
-
+		if(redCatched)
+			g.setPaint(Color.RED);
+		else
+			g.setPaint(Color.WHITE);
+        g.fillOval(480, 500, 10, 10);
         //ABTOMAT
         g.setPaint(new Color(111, 0, 255));
         g.fillRect(300, 470, 100, 100);
@@ -667,6 +680,7 @@ class sFrame extends JFrame
     public sFrame()
     {
         this.add(new JScrollPane(new sComponent()));
+		this.setResizable(false);
         this.pack();
     }
 }
